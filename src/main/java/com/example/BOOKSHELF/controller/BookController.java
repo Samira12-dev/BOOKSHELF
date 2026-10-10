@@ -2,7 +2,7 @@ package com.example.BOOKSHELF.controller;
 
 import com.example.BOOKSHELF.dto.BookRequestDto;
 import com.example.BOOKSHELF.dto.BookResponseDto;
-import com.example.BOOKSHELF.service.BookService;
+import com.example.BOOKSHELF.service.BookServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/books")
 @RequiredArgsConstructor
 public class BookController {
-    private final BookService service;
+    private final BookServiceImpl service;
 
     @PostMapping()
     public BookResponseDto addBook(@Valid @RequestBody BookRequestDto dto){
