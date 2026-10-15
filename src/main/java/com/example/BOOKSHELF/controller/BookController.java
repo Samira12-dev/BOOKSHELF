@@ -2,11 +2,12 @@ package com.example.BOOKSHELF.controller;
 
 import com.example.BOOKSHELF.dto.BookRequestDto;
 import com.example.BOOKSHELF.dto.BookResponseDto;
-import com.example.BOOKSHELF.service.BookServiceImpl;
+import com.example.BOOKSHELF.service.serviceImpl.BookServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -39,4 +40,25 @@ public class BookController {
     public void deleteBook(@PathVariable Long id){
        service.deleteBook(id);
     }
+
+//    @GetMapping("/{auteur}")
+//    public List<BookResponseDto>getAuteur(@PathVariable String auteur ){
+//        return service.findByAuteur(auteur);
+//    }
+
+    @GetMapping("/borrowedBooks")
+    public  List<BookResponseDto> getBooksBorrowed(){
+        return  service.findByStatus();
+    }
+    @GetMapping("/availableBooks")
+    public List<BookResponseDto> getAvailableBooks(){
+        return  service.findByStatusAvailable();
+    }
+
+    @GetMapping("/titre")
+    public  List<BookResponseDto> getByTitre(@RequestParam (name = "ti") String ti){
+        return service.findByTitreIsContainingIgnoreCase(String.valueOf(ti));
+    }
+
 }
+

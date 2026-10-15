@@ -1,11 +1,13 @@
-package com.example.BOOKSHELF.service;
+package com.example.BOOKSHELF.service.serviceImpl;
 
 import com.example.BOOKSHELF.dto.BookRequestDto;
 import com.example.BOOKSHELF.dto.BookResponseDto;
 import com.example.BOOKSHELF.entity.Book;
+import com.example.BOOKSHELF.enums.Status;
 import com.example.BOOKSHELF.exception.BookNotFoundException;
 import com.example.BOOKSHELF.mapper.BookMapper;
 import com.example.BOOKSHELF.repo.BookRepo;
+import com.example.BOOKSHELF.service.BookService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -63,4 +65,29 @@ public class BookServiceImpl implements BookService {
         Book book = repo.findById(id).orElseThrow(() -> new BookNotFoundException("Book not found"));
         repo.delete(book);
     }
+    @Override
+    public List<BookResponseDto> findByAuteur (String auteur){
+       List<Book>  books= repo.findByAuteur(auteur);
+       return  books.stream().map(mapper::toResponse).toList();
+    }
+
+    @Override
+    public List<BookResponseDto> findByStatus(){
+
+        List<Book> booksBorrowed= repo.findByStatus(Status.BORROWED);
+        return  booksBorrowed.stream().map(mapper::toResponse).toList();
+    }
+
+    @Override
+    public List<BookResponseDto> findByStatusAvailable(){
+        return repo.findByStatus(Status.AVAILABLE).stream()
+                .map(mapper::toResponse).toList();
+    }
+  public List<BookResponseDto> findByTitreIsContainingIgnoreCase(String titre){
+        List<Book> listBYTiitre= repo.findByTitreIsContainingIgnoreCase(titre);
+        return  mapper.toDtoList(listBYTiitre);
+  }
+
+
+
 }

@@ -6,6 +6,8 @@ import com.example.BOOKSHELF.entity.Book;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface BookMapper {
 
@@ -13,4 +15,6 @@ public interface BookMapper {
     BookResponseDto toResponse(Book book);
 
     void updateBook(BookRequestDto requestDto, @MappingTarget Book book);
+
+    List<BookResponseDto> toDtoList(List<Book> bookList);
 }
