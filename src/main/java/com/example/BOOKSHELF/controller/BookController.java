@@ -39,4 +39,13 @@ public class BookController {
     public void deleteBook(@PathVariable Long id){
        service.deleteBook(id);
     }
+    @GetMapping("/borrowedBooks")
+    public  List<BookResponseDto> getBooksBorrowed(){
+        return  service.findByStatus();
+    }
+    @GetMapping("/availableBooks")
+    public List<BookResponseDto> getAvailableBooks() {
+        return service.findByStatusAvailable();
+    }
+
 }
